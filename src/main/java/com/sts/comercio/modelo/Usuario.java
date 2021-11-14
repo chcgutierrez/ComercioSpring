@@ -7,17 +7,20 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "producto")
-public class Producto {
-	
+@Table(name = "usuario")
+public class Usuario {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idProducto;
+	private Integer idUsuario;
 	
 	private String nombre;
-	private String descripcion;
-	private String imagen;
-	private double valor;
-	private int cantidad;
-
+	private String apellido;
+	private String email;
+	private String direccion;
+	private String telefono;
+	private String tipo;
+	private String password;
+	private String username;
+	
 }
