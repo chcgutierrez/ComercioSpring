@@ -36,7 +36,7 @@ public class Usuario {
 	}
 
 	public Usuario(Integer idUsuario, String nombre, String apellido, String email, String direccion, String telefono,
-			String tipo, String password, String username, List<Producto> productos, List<Orden> ordenes) {
+			String tipo, String password, String username) {
 		super();
 		this.idUsuario = idUsuario;
 		this.nombre = nombre;
@@ -47,8 +47,6 @@ public class Usuario {
 		this.tipo = tipo;
 		this.password = password;
 		this.username = username;
-		this.productos = productos;
-		this.ordenes = ordenes;
 	}
 
 	public Integer getIdUsuario() {
@@ -143,7 +141,7 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [idUsuario=" + idUsuario + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", tipo=" + tipo + ", password=" + password
-				+ ", username=" + username + ", productos=" + productos + ", ordenes=" + ordenes + "]";
+				+ ", username=" + username + "]";
 	}	
 	
 }
