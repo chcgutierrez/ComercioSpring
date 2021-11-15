@@ -4,5 +4,16 @@
  * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-heroic-features/blob/master/LICENSE)
  */
 body {
-  padding-top: 56px;
+	padding-top: 56px;
+}
+
+.wrapper {
+	height: 400px;
+	margin: 0 auto;
+	border: 1px solid #fff;
+	overflow-y: auto;
+}
+
+thead th {
+	background: #fff;
 }

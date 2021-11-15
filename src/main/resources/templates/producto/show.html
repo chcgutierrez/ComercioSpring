@@ -27,7 +27,7 @@
 
 	<!-- Page Content -->
 	<div class="container">
-	
+
 		<!-- Page Heading/Breadcrumbs -->
 		<h1 class="mt-4 mb-3">
 			Spring eCommerce <small>Productos</small>
@@ -40,31 +40,33 @@
 
 		<a class="btn btn-primary" th:href="@{/productos/crear}">Crear Producto</a>
 		<h2>Productos</h2>
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">Nombre</th>
-					<th scope="col">Descripción</th>
-					<th scope="col">Inventario</th>
-					<th scope="col">Precio</th>
-					<th scope="col">Acción</th>
-					<th scope="col">Acción</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td><a class="btn btn-warning" th:href="@{/productos/edit}">Editar</a></td>
-					<td><a class="btn btn-danger" href="">Eliminar</a></td>
-				</tr>
-			</tbody>
-		</table>
+
+		<div class="wrapper mx-auto mt-0">
+			<table id="tblProductos" class="table table-hover">
+				<thead>
+					<tr>
+						<th class="sticky-top" scope="col">Nombre</th>
+						<th class="sticky-top" scope="col">Descripción</th>
+						<th class="sticky-top" scope="col">Inventario</th>
+						<th class="sticky-top" scope="col">Precio</th>
+						<th class="sticky-top" scope="col">Acción</th>
+						<th class="sticky-top" scope="col">Acción</th>
+					</tr>
+				</thead>
+				<tbody style="height: 300px; overflow-y: scroll;">
+					<tr th:each="prod_modelo:${productos_all}">
+						<td th:text="${prod_modelo.nombre}"></td>
+						<td th:text="${prod_modelo.descripcion}"></td>
+						<td th:text="${prod_modelo.cantidad}"></td>
+						<td th:text="${prod_modelo.valor}"></td>
+						<td><a class="btn btn-warning" th:href="@{/productos/edit}">Editar</a></td>
+						<td><a class="btn btn-danger" href="">Eliminar</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 	</div>
-	<!-- /.container -->
 
 	<!-- Footer -->
 	<div th:include="administrador/temp_admin.html::footer"></div>
@@ -72,7 +74,7 @@
 	<!-- Bootstrap core JavaScript -->
 	<script th:src="@{vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
+	<script th:src="@{funciones/pryfunciones.js}"></script>
 </body>
 
 </html>

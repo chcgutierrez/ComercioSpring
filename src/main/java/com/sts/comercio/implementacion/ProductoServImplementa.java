@@ -1,5 +1,6 @@
 package com.sts.comercio.implementacion;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class ProductoServImplementa implements ProductoServicio {
 
 	@Override
 	public Producto GuardarProducto(Producto oProducto) {
-		
-		//Pasa el Id en Null para crear
+
+		// Pasa el Id en Null para crear
 		return oProduRepo.save(oProducto);
 
 	}
@@ -33,7 +34,7 @@ public class ProductoServImplementa implements ProductoServicio {
 	@Override
 	public void ActualizarProducto(Producto oProducto) {
 
-		//Pasa el Id con valor para actualizar
+		// Pasa el Id con valor para actualizar
 		oProduRepo.save(oProducto);
 
 	}
@@ -42,6 +43,13 @@ public class ProductoServImplementa implements ProductoServicio {
 	public void EliminarProducto(Integer idProducto) {
 
 		oProduRepo.deleteById(idProducto);
+
+	}
+
+	@Override
+	public List<Producto> VerTodo() {
+
+		return oProduRepo.findAll();
 
 	}
 
