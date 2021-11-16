@@ -17,6 +17,9 @@
 
 <!-- Custom styles for this template -->
 <link th:href="@{css/heroic-features.css}" rel="stylesheet">
+<link th:href="@{sweetalert/sweetalert.css}" rel="stylesheet">
+
+
 
 </head>
 
@@ -53,14 +56,15 @@
 						<th class="sticky-top" scope="col">Acción</th>
 					</tr>
 				</thead>
-				<tbody style="height: 300px; overflow-y: scroll;">
+				<tbody style="height: 100px; overflow-y: scroll;">
 					<tr th:each="prod_modelo:${productos_all}">
 						<td th:text="${prod_modelo.nombre}"></td>
 						<td th:text="${prod_modelo.descripcion}"></td>
 						<td th:text="${prod_modelo.cantidad}"></td>
 						<td th:text="${prod_modelo.valor}"></td>
 						<td><a class="btn btn-warning" th:href="@{productos/editar/{idProducto} (idProducto=${prod_modelo.idProducto})}">Editar</a></td>
-						<td><a class="btn btn-danger" href="">Eliminar</a></td>
+						<td><a class="btn btn-danger" th:onclick="eliminar([[${prod_modelo.idProducto}]])" href="#">Eliminar</a></td>
+<!-- 						<td><a class="btn btn-danger" th:href="@{productos/eliminar/{idProducto} (idProducto=${prod_modelo.idProducto})}">Eliminar</a></td> -->
 					</tr>
 				</tbody>
 			</table>
@@ -73,8 +77,10 @@
 
 	<!-- Bootstrap core JavaScript -->
 	<script th:src="@{vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>	
+	<script th:src="@{sweetalert/sweetalert.js}"></script>
 	<script th:src="@{funciones/pryfunciones.js}"></script>
+	
 </body>
 
 </html>

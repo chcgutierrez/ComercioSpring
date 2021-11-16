@@ -73,5 +73,14 @@ public class ProductoControlador {
 		return "redirect:/productos";
 		
 	}
+	
+	// Bloque para realizar la modificacion del producto
+	@GetMapping("/eliminar/{idProducto}")
+	public String Eliminar(@PathVariable Integer idProducto) {
+		
+		oProduServicio.EliminarProducto(idProducto);
+		return "redirect:/productos";
+		
+	}
 
 }
