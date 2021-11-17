@@ -2,6 +2,8 @@
 //
 function eliminar(idProducto) {
 
+	console.log(idProducto);
+
 	const swalWithBootstrapButtons = Swal.mixin({
 		customClass: {
 			confirmButton: 'btn btn-success',
@@ -26,7 +28,7 @@ function eliminar(idProducto) {
 					console.log(res);
 				}
 			});
-			
+
 			setTimeout(function() {
 				parent.location.href = "/productos";
 			}, 2100);

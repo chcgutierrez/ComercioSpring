@@ -40,7 +40,8 @@
 			<li class="breadcrumb-item active">Productos</li>
 		</ol>
 
-		<a class="btn btn-primary" th:href="@{/productos/crear}">Crear Producto</a>
+		<a class="btn btn-primary" th:href="@{/productos/crear}">Crear
+			Producto</a>
 		<h2>Productos</h2>
 
 		<div class="wrapper mx-auto mt-0">
@@ -63,7 +64,7 @@
 						<td th:text="${prod_modelo.valor}"></td>
 						<td><a class="btn btn-warning" th:href="@{productos/editar/{idProducto} (idProducto=${prod_modelo.idProducto})}">Editar</a></td>
 						<td><a class="btn btn-danger" th:onclick="eliminar([[${prod_modelo.idProducto}]])" href="#">Eliminar</a></td>
-<!-- 						<td><a class="btn btn-danger" th:href="@{productos/eliminar/{idProducto} (idProducto=${prod_modelo.idProducto})}">Eliminar</a></td> -->
+						<!-- 						<td><a class="btn btn-danger" th:href="@{productos/eliminar/{idProducto} (idProducto=${prod_modelo.idProducto})}">Eliminar</a></td> -->
 					</tr>
 				</tbody>
 			</table>
@@ -76,10 +77,10 @@
 
 	<!-- Bootstrap core JavaScript -->
 	<script th:src="@{vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>	
+	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{sweetalert/sweetalert2.all.min.js}"></script>
 	<script th:src="@{funciones/pryfunciones.js}"></script>
-	
+
 </body>
 
 </html>
