@@ -31,6 +31,9 @@ public class ProductoControlador {
 
 	@Autowired
 	private CargarFileServicio oFileServicio;
+	
+	//Imagen por defecto
+	private String imgDefault="default.jpg";
 
 	@GetMapping("")
 	public String VerProductos(Model oModelo) {
@@ -62,22 +65,6 @@ public class ProductoControlador {
 			String imgNombre = oFileServicio.GuardarImagen(imgFile);
 			oProducto.setImagen(imgNombre);
 
-		} else {
-
-			// Modifico el producto dejando la misma imagen
-			if (imgFile.isEmpty()) {
-
-				Producto oProduAux = new Producto();
-				oProduAux = oProduServicio.BuscarProduId(oProducto.getIdProducto()).get();
-				oProducto.setImagen(oProduAux.getImagen());
-
-			} else {
-
-				// Modifico el producto y cambio la imagen
-				String imgNombre = oFileServicio.GuardarImagen(imgFile);
-				oProducto.setImagen(imgNombre);
-			}
-
 		}
 
 		oProduServicio.GuardarProducto(oProducto);
@@ -100,7 +87,32 @@ public class ProductoControlador {
 
 	// Bloque para Modificar los datos del producto en BD
 	@PostMapping("/modificar")
-	public String Modificar(Producto oProducto) {
+	public String Modificar(Producto oProducto, @RequestParam("imgproducto") MultipartFile imgFile) throws IOException {
+
+		Producto oProduAux = new Producto();
+
+		// Modifico el producto dejando la misma imagen
+		if (imgFile.isEmpty()) {
+
+			oProduAux = oProduServicio.BuscarProduId(oProducto.getIdProducto()).get();
+			oProducto.setImagen(oProduAux.getImagen());
+
+		} else {
+
+			// Modifico el producto y cambio la imagen
+			oProduAux = oProduServicio.BuscarProduId(oProducto.getIdProducto()).get();
+
+			// Elimina la imagen del Servidor si no es la imagen default
+			if (!oProduAux.getImagen().equals(imgDefault)) {
+
+				oFileServicio.BorrarImagen(oProduAux.getImagen());
+
+			}
+
+			String imgNombre = oFileServicio.GuardarImagen(imgFile);
+			oProducto.setImagen(imgNombre);
+
+		}
 
 		oProduServicio.ActualizarProducto(oProducto);
 		return "redirect:/productos";
@@ -110,6 +122,16 @@ public class ProductoControlador {
 	// Bloque para Eliminar los datos del producto en BD
 	@GetMapping("/eliminar/{idProducto}")
 	public String Eliminar(@PathVariable Integer idProducto) {
+
+		Producto oProduAux = new Producto();
+		oProduAux = oProduServicio.BuscarProduId(idProducto).get();
+
+		// Elimina la imagen del Servidor si no es la imagen default
+		if (!oProduAux.getImagen().equals(imgDefault)) {
+
+			oFileServicio.BorrarImagen(oProduAux.getImagen());
+
+		}
 
 		oProduServicio.EliminarProducto(idProducto);
 		return "redirect:/productos";
