@@ -8,6 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
+
 <title>Spring eCommerce</title>
 
 <!-- Bootstrap core CSS -->
@@ -37,13 +38,14 @@
 		<div class="row text-center">
 
 			<div class="col-lg-3 col-md-6 mb-4"
-				th:each="card_producto:${productos_home}">
+				th:each="home_producto:${productos_home}">
 				<div class="card h-100">
 					<img class="card-img-top" width="500" height="250"
-						th:src="@{/imagenes/{img_produ} (img_produ=${card_producto.imagen})}"
+						th:src="@{/imagenes/{img_produ} (img_produ=${home_producto.imagen})}"
 						alt="">
 					<div class="card-body">
-						<p class="card-text" th:text="${card_producto.nombre}">Nombre del producto.</p>
+						<p class="card-text" th:text="${home_producto.nombre}">Nombre
+							del producto.</p>
 					</div>
 					<div class="card-footer">
 						<a href="productohome.html" class="btn btn-success">Ver
@@ -53,7 +55,6 @@
 			</div>
 
 		</div>
-		<!-- /.row -->
 
 	</div>
 	<!-- /.container -->
