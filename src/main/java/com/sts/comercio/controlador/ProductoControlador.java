@@ -31,9 +31,9 @@ public class ProductoControlador {
 
 	@Autowired
 	private CargarFileServicio oFileServicio;
-	
-	//Imagen por defecto
-	private String imgDefault="default.jpg";
+
+	// Imagen por defecto
+	private String imgDefault = "default.jpg";
 
 	@GetMapping("")
 	public String VerProductos(Model oModelo) {
@@ -90,17 +90,14 @@ public class ProductoControlador {
 	public String Modificar(Producto oProducto, @RequestParam("imgproducto") MultipartFile imgFile) throws IOException {
 
 		Producto oProduAux = new Producto();
+		oProduAux = oProduServicio.BuscarProduId(oProducto.getIdProducto()).get();
 
 		// Modifico el producto dejando la misma imagen
 		if (imgFile.isEmpty()) {
 
-			oProduAux = oProduServicio.BuscarProduId(oProducto.getIdProducto()).get();
 			oProducto.setImagen(oProduAux.getImagen());
 
 		} else {
-
-			// Modifico el producto y cambio la imagen
-			oProduAux = oProduServicio.BuscarProduId(oProducto.getIdProducto()).get();
 
 			// Elimina la imagen del Servidor si no es la imagen default
 			if (!oProduAux.getImagen().equals(imgDefault)) {
@@ -114,6 +111,7 @@ public class ProductoControlador {
 
 		}
 
+		oProducto.setUsuario(oProduAux.getUsuario());
 		oProduServicio.ActualizarProducto(oProducto);
 		return "redirect:/productos";
 
