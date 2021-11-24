@@ -21,11 +21,21 @@ public class AdminControlador {
 	@GetMapping("")
 	public String Home(Model oModel) {
 		
-		List<Producto> lstProductos=oProduService.VerTodo();
+		List<Producto> lstProductos=oProduService.MostrarTodo();
 		oModel.addAttribute("productos_home", lstProductos);
 		
 		return "administrador/home";
 		
 	}
+	
+//	@GetMapping("")
+//	public String Home(Model oModel) {
+//		
+//		List<Producto> lstProductos=oProduService.VerTodo();
+//		oModel.addAttribute("productos_home", lstProductos);
+//		
+//		return "administrador/home";
+//		
+//	}
 
 }

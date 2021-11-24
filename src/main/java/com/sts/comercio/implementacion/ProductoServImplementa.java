@@ -17,13 +17,6 @@ public class ProductoServImplementa implements ProductoServicio {
 	private ProductoRepositorio oProduRepo;
 
 	@Override
-	public Optional<Producto> BuscarProduId(Integer idProducto) {
-
-		return oProduRepo.findById(idProducto);
-
-	}
-
-	@Override
 	public Producto GuardarProducto(Producto oProducto) {
 
 		// Pasa el Id en Null para crear
@@ -46,10 +39,27 @@ public class ProductoServImplementa implements ProductoServicio {
 
 	}
 
-	@Override
-	public List<Producto> VerTodo() {
+	// *****************************************************************
 
-		return oProduRepo.findAll();
+	@Override
+	public List<Producto> MostrarTodo() {
+
+		return oProduRepo.MostrarProductos();
+
+	}
+
+	@Override
+	public Optional<Producto> BuscarProducto(Integer idProducto) {
+
+		return oProduRepo.BuscarProducto(idProducto);
+
+	}
+
+	@Override
+	public void InsertProducto(Producto oProducto) {
+
+		oProduRepo.InsertProducto(oProducto.getCantidad(), oProducto.getDescripcion(), oProducto.getImagen(),
+				oProducto.getNombre(), oProducto.getValor(), oProducto.getUsuario().getIdUsuario());
 
 	}
 

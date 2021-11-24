@@ -35,10 +35,11 @@ public class ProductoControlador {
 	// Imagen por defecto
 	private String imgDefault = "default.jpg";
 
+	// ***********************************************
 	@GetMapping("")
-	public String VerProductos(Model oModelo) {
+	public String MostrarProductos(Model oModelo) {
 
-		oModelo.addAttribute("productos_all", oProduServicio.VerTodo());
+		oModelo.addAttribute("productos_all", oProduServicio.MostrarTodo());
 		return "producto/show";
 
 	}
@@ -55,7 +56,6 @@ public class ProductoControlador {
 	@PostMapping("/guardar")
 	public String Guardar(Producto oProducto, @RequestParam("imgproducto") MultipartFile imgFile) throws IOException {
 
-		oLogger.info("Objeto producto enviado desde el form: {}", oProducto);
 		Usuario oUsuario = new Usuario(1, "", "", "", "", "", "", "", "");
 		oProducto.setUsuario(oUsuario);
 
@@ -67,7 +67,9 @@ public class ProductoControlador {
 
 		}
 
-		oProduServicio.GuardarProducto(oProducto);
+		oLogger.info("Objeto producto enviado desde el form: {}", oProducto);
+		oProduServicio.InsertProducto(oProducto);
+		//oProduServicio.GuardarProducto(oProducto);
 		return "redirect:/productos";
 	}
 
@@ -77,7 +79,7 @@ public class ProductoControlador {
 	public String EditarProductos(@PathVariable Integer idProducto, Model oModelo) {
 
 		Producto oProducto = new Producto();
-		Optional<Producto> optProducto = oProduServicio.BuscarProduId(idProducto);
+		Optional<Producto> optProducto = oProduServicio.BuscarProducto(idProducto);
 		oProducto = optProducto.get();
 		oModelo.addAttribute("producto_edit", oProducto);
 		oLogger.info("Objeto recuperado desde el form: {}", oProducto);
@@ -90,7 +92,7 @@ public class ProductoControlador {
 	public String Modificar(Producto oProducto, @RequestParam("imgproducto") MultipartFile imgFile) throws IOException {
 
 		Producto oProduAux = new Producto();
-		oProduAux = oProduServicio.BuscarProduId(oProducto.getIdProducto()).get();
+		oProduAux = oProduServicio.BuscarProducto(oProducto.getIdProducto()).get();
 
 		// Modifico el producto dejando la misma imagen
 		if (imgFile.isEmpty()) {
@@ -122,7 +124,7 @@ public class ProductoControlador {
 	public String Eliminar(@PathVariable Integer idProducto) {
 
 		Producto oProduAux = new Producto();
-		oProduAux = oProduServicio.BuscarProduId(idProducto).get();
+		oProduAux = oProduServicio.BuscarProducto(idProducto).get();
 
 		// Elimina la imagen del Servidor si no es la imagen default
 		if (!oProduAux.getImagen().equals(imgDefault)) {

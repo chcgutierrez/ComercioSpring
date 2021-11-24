@@ -18,7 +18,7 @@ public class HomeControlador {
 	@GetMapping("")
 	public String Home(Model oModel) {
 
-		oModel.addAttribute("productos_home", oProduService.VerTodo());
+		oModel.addAttribute("productos_home", oProduService.MostrarTodo());
 
 		return "usuario/home";
 
