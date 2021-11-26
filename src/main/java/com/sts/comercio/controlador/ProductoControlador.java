@@ -68,9 +68,13 @@ public class ProductoControlador {
 		}
 
 		oLogger.info("Objeto producto enviado desde el form: {}", oProducto);
-		oProduServicio.InsertProducto(oProducto);
-		//oProduServicio.GuardarProducto(oProducto);
+		var insertado = oProduServicio.InsertProducto(oProducto);
+		// oProduServicio.GuardarProducto(oProducto);
+
+		oLogger.info("Fila creada desde el form: {}", insertado);
+
 		return "redirect:/productos";
+
 	}
 
 	// Bloque para realizar la modificacion del producto
@@ -114,7 +118,12 @@ public class ProductoControlador {
 		}
 
 		oProducto.setUsuario(oProduAux.getUsuario());
-		oProduServicio.ActualizarProducto(oProducto);
+
+		oLogger.info("Objeto producto enviado desde el form: {}", oProducto);
+		var insertado = oProduServicio.UpdateProducto(oProducto);
+
+		oLogger.info("Fila editada desde el form: {}", insertado);
+
 		return "redirect:/productos";
 
 	}
@@ -133,7 +142,12 @@ public class ProductoControlador {
 
 		}
 
-		oProduServicio.EliminarProducto(idProducto);
+		oLogger.info("ID producto enviado desde el form: {}", idProducto);
+
+		var borrado = oProduServicio.DeleteProducto(idProducto);
+
+		oLogger.info("Fila borrada desde el form: {}", borrado);
+
 		return "redirect:/productos";
 
 	}

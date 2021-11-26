@@ -17,31 +17,6 @@ public class ProductoServImplementa implements ProductoServicio {
 	private ProductoRepositorio oProduRepo;
 
 	@Override
-	public Producto GuardarProducto(Producto oProducto) {
-
-		// Pasa el Id en Null para crear
-		return oProduRepo.save(oProducto);
-
-	}
-
-	@Override
-	public void ActualizarProducto(Producto oProducto) {
-
-		// Pasa el Id con valor para actualizar
-		oProduRepo.save(oProducto);
-
-	}
-
-	@Override
-	public void EliminarProducto(Integer idProducto) {
-
-		oProduRepo.deleteById(idProducto);
-
-	}
-
-	// *****************************************************************
-
-	@Override
 	public List<Producto> MostrarTodo() {
 
 		return oProduRepo.MostrarProductos();
@@ -56,10 +31,26 @@ public class ProductoServImplementa implements ProductoServicio {
 	}
 
 	@Override
-	public void InsertProducto(Producto oProducto) {
+	public int InsertProducto(Producto oProducto) {
 
-		oProduRepo.InsertProducto(oProducto.getCantidad(), oProducto.getDescripcion(), oProducto.getImagen(),
+		return oProduRepo.InsertProducto(oProducto.getCantidad(), oProducto.getDescripcion(), oProducto.getImagen(),
 				oProducto.getNombre(), oProducto.getValor(), oProducto.getUsuario().getIdUsuario());
+
+	}
+
+	@Override
+	public int UpdateProducto(Producto oProducto) {
+
+		return oProduRepo.UpdateProducto(oProducto.getIdProducto(), oProducto.getCantidad(), oProducto.getDescripcion(),
+				oProducto.getImagen(), oProducto.getNombre(), oProducto.getValor(),
+				oProducto.getUsuario().getIdUsuario());
+
+	}
+
+	@Override
+	public int DeleteProducto(Integer idProducto) {
+
+		return oProduRepo.DeleteProducto(idProducto);
 
 	}
 
