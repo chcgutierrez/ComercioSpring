@@ -44,12 +44,17 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-lg-6">
-						<a href="#"> <img class="img-fluid rounded" width="498" height="193"
-							th:src="@{/imagenes/{img_produ} (img_produ=${producto_home.imagen})}" alt="">
+						<a href="#"> <img class="img-fluid rounded" width="498"
+							height="193"
+							th:src="@{/imagenes/{img_produ} (img_produ=${producto_home.imagen})}"
+							alt="">
 						</a>
 					</div>
 					<div class="col-lg-6">
 						<form th:action="@{/carrito}" method="POST">
+							<input type="hidden" name="idProducto"
+								th:value="${producto_home.idProducto}">
+								
 							<h2 class="card-title" th:text="${producto_home.nombre}"></h2>
 
 							<ul class="list-group">
@@ -59,7 +64,7 @@
 									<p th:text="'Descripción: '+${producto_home.descripcion}"></p>
 								</li>
 								<li class="list-group-item"><h6>
-										Cantidad: <input type="number" id="cantidad" name="cantidad"
+										Cantidad: <input type="number" id="cantproducto" name="cantproducto"
 											autocomplete="off" min="1" max="5" value="1">
 									</h6></li>
 							</ul>

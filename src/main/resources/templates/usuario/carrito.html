@@ -54,11 +54,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>Nombre</td>
-									<td>Precio</td>
-									<td>Cantidad</td>
-									<td>Total</td>
+								<tr th:each="detOrden:${det_ord_carro}">
+									<td th:text="${detOrden.nombre}"></td>
+									<td th:text="${detOrden.precio}"></td>
+									<td th:text="${detOrden.cantidad}"></td>
+									<td th:text="${detOrden.total}"></td>
 									<td><a href="#" class="btn btn-danger">Quitar</a></td>
 								</tr>
 							</tbody>
@@ -67,9 +67,9 @@
 
 					<div class="col-lg-3">
 						<h2 class="card-title">Subtotal</h2>
-
 						<ul class="list-group">
-							<li class="list-group-item"><h5>Total: $ 10</h5></li>
+							<li class="list-group-item"><h5
+									th:text="'$'+${orden_carro.total}"></h5></li>
 							<a href="resumenorden.html" class="btn btn-info">Ver Orden</a>
 						</ul>
 					</div>
