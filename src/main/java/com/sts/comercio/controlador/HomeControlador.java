@@ -77,7 +77,13 @@ public class HomeControlador {
 		detOrden.setTotal(totalProdu);
 		detOrden.setProducto(detProducto);
 
-		mDetalleOrd.add(detOrden);
+		//Validar que no se agregue 2 veces el mismo producto
+		Integer idProduAux = detProducto.getIdProducto();
+		boolean ingresado = mDetalleOrd.stream().anyMatch(p -> p.getProducto().getIdProducto() == idProduAux);
+
+		if (!ingresado) {
+			mDetalleOrd.add(detOrden);
+		}
 
 		sumaTotal = mDetalleOrd.stream().mapToDouble(x -> x.getTotal()).sum();
 		mCabeOrden.setTotal(sumaTotal);
@@ -93,13 +99,12 @@ public class HomeControlador {
 	}
 
 	// Retirar los productos del carrito de compras
-	
+
 	/**
 	 * @param idProducto
 	 * @param oModelo
-	 * @return
-	 * Creo un nuevo detalle a partir de lo que está en la lista y lo
-	 * reasigno con los productos restantes y actualizo la sumatoria
+	 * @return Creo un nuevo detalle a partir de lo que está en la lista y lo
+	 *         reasigno con los productos restantes y actualizo la sumatoria
 	 */
 	@GetMapping("quitar/carrito/{idProducto}")
 	public String RetirarCarrito(@PathVariable Integer idProducto, Model oModelo) {
@@ -117,15 +122,25 @@ public class HomeControlador {
 		}
 
 		mDetalleOrd = auxDetalleOrd;
-		
+
 		double sumaTotal = 0;
 		sumaTotal = mDetalleOrd.stream().mapToDouble(x -> x.getTotal()).sum();
 		mCabeOrden.setTotal(sumaTotal);
 
 		oModelo.addAttribute("det_ord_carro", mDetalleOrd);
 		oModelo.addAttribute("orden_carro", mCabeOrden);
+
+		return "usuario/carrito";
+	}
+	
+	@GetMapping("mostrar/carrito")
+	public String MostrarCarrito(Model oModelo) {
+		
+		oModelo.addAttribute("det_ord_carro", mDetalleOrd);
+		oModelo.addAttribute("orden_carro", mCabeOrden);
 		
 		return "usuario/carrito";
+		
 	}
 
 }
