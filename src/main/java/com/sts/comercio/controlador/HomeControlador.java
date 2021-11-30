@@ -57,7 +57,8 @@ public class HomeControlador {
 
 	}
 
-	@PostMapping("/carrito")
+//Agregar productos en el carrito de compras
+	@PostMapping("agregar/carrito")
 	public String AgregarCarrito(@RequestParam Integer idProducto, @RequestParam Integer cantproducto, Model oModelo) {
 
 		DetaOrden detOrden = new DetaOrden();
@@ -77,18 +78,54 @@ public class HomeControlador {
 		detOrden.setProducto(detProducto);
 
 		mDetalleOrd.add(detOrden);
-		
+
 		sumaTotal = mDetalleOrd.stream().mapToDouble(x -> x.getTotal()).sum();
 		mCabeOrden.setTotal(sumaTotal);
-		
+
 		oModelo.addAttribute("det_ord_carro", mDetalleOrd);
 		oModelo.addAttribute("orden_carro", mCabeOrden);
-		
+
 		oLogger.info("Detalle Orden: {}", mDetalleOrd);
 		oLogger.info("Cabecera Orden: {}", mCabeOrden);
 
 		return "usuario/carrito";
 
+	}
+
+	// Retirar los productos del carrito de compras
+	
+	/**
+	 * @param idProducto
+	 * @param oModelo
+	 * @return
+	 * Creo un nuevo detalle a partir de lo que está en la lista y lo
+	 * reasigno con los productos restantes y actualizo la sumatoria
+	 */
+	@GetMapping("quitar/carrito/{idProducto}")
+	public String RetirarCarrito(@PathVariable Integer idProducto, Model oModelo) {
+
+		List<DetaOrden> auxDetalleOrd = new ArrayList<DetaOrden>();
+
+		for (DetaOrden oDetOrden : mDetalleOrd) {
+
+			if (oDetOrden.getProducto().getIdProducto() != idProducto) {
+
+				auxDetalleOrd.add(oDetOrden);
+
+			}
+
+		}
+
+		mDetalleOrd = auxDetalleOrd;
+		
+		double sumaTotal = 0;
+		sumaTotal = mDetalleOrd.stream().mapToDouble(x -> x.getTotal()).sum();
+		mCabeOrden.setTotal(sumaTotal);
+
+		oModelo.addAttribute("det_ord_carro", mDetalleOrd);
+		oModelo.addAttribute("orden_carro", mCabeOrden);
+		
+		return "usuario/carrito";
 	}
 
 }
