@@ -25,9 +25,14 @@
 	<!-- Navigation - Header -->
 	<div th:include="usuario/temp_user.html::header"></div>
 
+	<!-- Mensajes -->
+	<div class="alert alert-info alert-dismissable" th:if="${info != null}">
+		<label th:text="${info}"></label>
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
+
 	<!-- Page Content -->
 	<div class="container">
-
 
 		<!-- Page Heading/Breadcrumbs -->
 		<h1 class="mt-4 mb-3">
@@ -54,7 +59,7 @@
 						<form th:action="@{/agregar/carrito}" method="POST">
 							<input type="hidden" name="idProducto"
 								th:value="${producto_home.idProducto}">
-								
+
 							<h2 class="card-title" th:text="${producto_home.nombre}"></h2>
 
 							<ul class="list-group">
@@ -64,8 +69,9 @@
 									<p th:text="'Descripción: '+${producto_home.descripcion}"></p>
 								</li>
 								<li class="list-group-item"><h6>
-										Cantidad: <input type="number" id="cantproducto" name="cantproducto"
-											autocomplete="off" min="1" max="5" value="1">
+										Cantidad: <input type="number" id="cantproducto"
+											name="cantproducto" autocomplete="off" min="1" max="5"
+											value="1">
 									</h6></li>
 							</ul>
 

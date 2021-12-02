@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sts.comercio.modelo.Producto;
 import com.sts.comercio.modelo.Usuario;
@@ -54,7 +55,8 @@ public class ProductoControlador {
 	}
 
 	@PostMapping("/guardar")
-	public String Guardar(Producto oProducto, @RequestParam("imgproducto") MultipartFile imgFile) throws IOException {
+	public String Guardar(Producto oProducto, @RequestParam("imgproducto") MultipartFile imgFile,
+			RedirectAttributes oAtributoMsj) throws IOException {
 
 		Usuario oUsuario = new Usuario(1, "", "", "", "", "", "", "", "");
 		oProducto.setUsuario(oUsuario);
@@ -72,6 +74,12 @@ public class ProductoControlador {
 		// oProduServicio.GuardarProducto(oProducto);
 
 		oLogger.info("Fila creada desde el form: {}", insertado);
+
+		if (insertado == 1) {
+
+			oAtributoMsj.addFlashAttribute("success", "Datos guardados correctamente.");
+
+		}
 
 		return "redirect:/productos";
 

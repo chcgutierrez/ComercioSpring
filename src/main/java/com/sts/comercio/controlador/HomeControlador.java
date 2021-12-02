@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sts.comercio.modelo.DetaOrden;
 import com.sts.comercio.modelo.Orden;
@@ -57,9 +58,10 @@ public class HomeControlador {
 
 	}
 
-//Agregar productos en el carrito de compras
+    //Agregar productos en el carrito de compras
 	@PostMapping("agregar/carrito")
-	public String AgregarCarrito(@RequestParam Integer idProducto, @RequestParam Integer cantproducto, Model oModelo) {
+	public String AgregarCarrito(@RequestParam Integer idProducto, @RequestParam Integer cantproducto, Model oModelo,
+			RedirectAttributes oAtributoMsj) {
 
 		DetaOrden detOrden = new DetaOrden();
 		Producto detProducto = new Producto();
@@ -77,12 +79,19 @@ public class HomeControlador {
 		detOrden.setTotal(totalProdu);
 		detOrden.setProducto(detProducto);
 
-		//Validar que no se agregue 2 veces el mismo producto
+		// Validar que no se agregue 2 veces el mismo producto
 		Integer idProduAux = detProducto.getIdProducto();
 		boolean ingresado = mDetalleOrd.stream().anyMatch(p -> p.getProducto().getIdProducto() == idProduAux);
 
 		if (!ingresado) {
+
 			mDetalleOrd.add(detOrden);
+
+		} else {
+
+			oAtributoMsj.addFlashAttribute("info", "Este producto ya está agregado.");
+			return "redirect:/producto_home/" + idProduAux;
+
 		}
 
 		sumaTotal = mDetalleOrd.stream().mapToDouble(x -> x.getTotal()).sum();
@@ -132,15 +141,12 @@ public class HomeControlador {
 
 		return "usuario/carrito";
 	}
-	
-	@GetMapping("mostrar/carrito")
-	public String MostrarCarrito(Model oModelo) {
-		
-		oModelo.addAttribute("det_ord_carro", mDetalleOrd);
-		oModelo.addAttribute("orden_carro", mCabeOrden);
-		
-		return "usuario/carrito";
-		
+
+	@GetMapping("/orden")
+	public String ResumenOrden() {
+
+		return "usuario/resumenorden";
+
 	}
 
 }
