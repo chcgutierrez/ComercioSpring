@@ -19,7 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sts.comercio.modelo.DetaOrden;
 import com.sts.comercio.modelo.Orden;
 import com.sts.comercio.modelo.Producto;
+import com.sts.comercio.modelo.Usuario;
 import com.sts.comercio.servicio.ProductoServicio;
+import com.sts.comercio.servicio.UsuarioServicio;
 
 @Controller
 @RequestMapping("/")
@@ -35,6 +37,9 @@ public class HomeControlador {
 
 	@Autowired
 	private ProductoServicio oProduService;
+
+	@Autowired
+	private UsuarioServicio oUsuarioService;
 
 	@GetMapping("")
 	public String Home(Model oModel) {
@@ -58,7 +63,7 @@ public class HomeControlador {
 
 	}
 
-    //Agregar productos en el carrito de compras
+	// Agregar productos en el carrito de compras
 	@PostMapping("agregar/carrito")
 	public String AgregarCarrito(@RequestParam Integer idProducto, @RequestParam Integer cantproducto, Model oModelo,
 			RedirectAttributes oAtributoMsj) {
@@ -142,8 +147,24 @@ public class HomeControlador {
 		return "usuario/carrito";
 	}
 
+	@GetMapping("/mostrar/carrito")
+	public String MostrarCarrito(Model oModelo) {
+
+		oModelo.addAttribute("det_ord_carro", mDetalleOrd);
+		oModelo.addAttribute("orden_carro", mCabeOrden);
+
+		return "usuario/carrito";
+
+	}
+
 	@GetMapping("/orden")
-	public String ResumenOrden() {
+	public String ResumenOrden(Model oModelo) {
+
+		Usuario oUsuario = oUsuarioService.BuscarUsuario(1).get();
+
+		oModelo.addAttribute("det_ord_resumen", mDetalleOrd);
+		oModelo.addAttribute("orden_resumen", mCabeOrden);
+		oModelo.addAttribute("usuario_orden", oUsuario);
 
 		return "usuario/resumenorden";
 

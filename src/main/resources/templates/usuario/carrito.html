@@ -70,8 +70,9 @@
 					<div class="col-lg-3">
 						<h2 class="card-title">Subtotal</h2>
 						<ul class="list-group">
-							<li class="list-group-item"><h5
-									th:text="'$'+${orden_carro.total}"></h5></li>
+							<li class="list-group-item">
+								<h5 th:text="'$'+${orden_carro.total}"></h5>
+							</li>
 							<a th:href="@{/orden}" class="btn btn-info">Ver Orden</a>
 						</ul>
 					</div>
