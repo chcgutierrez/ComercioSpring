@@ -1,6 +1,7 @@
 package com.sts.comercio.controlador;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,8 @@ import com.sts.comercio.modelo.DetaOrden;
 import com.sts.comercio.modelo.Orden;
 import com.sts.comercio.modelo.Producto;
 import com.sts.comercio.modelo.Usuario;
+import com.sts.comercio.servicio.DetaOrdenServicio;
+import com.sts.comercio.servicio.OrdenServicio;
 import com.sts.comercio.servicio.ProductoServicio;
 import com.sts.comercio.servicio.UsuarioServicio;
 
@@ -40,6 +43,12 @@ public class HomeControlador {
 
 	@Autowired
 	private UsuarioServicio oUsuarioService;
+
+	@Autowired
+	private OrdenServicio oOrdenService;
+
+	@Autowired
+	private DetaOrdenServicio oDetaService;
 
 	@GetMapping("")
 	public String Home(Model oModel) {
@@ -167,6 +176,41 @@ public class HomeControlador {
 		oModelo.addAttribute("usuario_orden", oUsuario);
 
 		return "usuario/resumenorden";
+
+	}
+
+	// Guarda la Orden con los productos
+	@GetMapping("/orden/guardar")
+	public String GuardarOrden() {
+
+		Usuario oUsuario = oUsuarioService.BuscarUsuario(1).get();
+		Date dteFechaCrea = new Date();
+
+		// Guarda Encabezado
+		mCabeOrden.setFechaCrea(dteFechaCrea);
+		mCabeOrden.setNumero(oOrdenService.ConseOrden());
+		mCabeOrden.setUsuario(oUsuario);
+
+		int idOrden = oOrdenService.GuardarOrden(mCabeOrden);
+		oLogger.info("Orden Creada: {}", idOrden);
+		mCabeOrden.setIdOrden(idOrden);
+		
+		oLogger.info("Cabecera Orden Guardar: {}", mCabeOrden);
+		
+		// Guarda Detalle
+		for (DetaOrden dtGuardar : mDetalleOrd) {
+
+			dtGuardar.setOrden(mCabeOrden);
+
+			oLogger.info("Detalle Orden Guardar: {}", dtGuardar);
+			oDetaService.GuardarDetaOrden(dtGuardar);
+
+		}
+
+		mCabeOrden = new Orden();
+		mDetalleOrd.clear();
+
+		return "redirect:/";
 
 	}
 
