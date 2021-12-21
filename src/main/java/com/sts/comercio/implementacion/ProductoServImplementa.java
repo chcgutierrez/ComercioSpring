@@ -54,4 +54,11 @@ public class ProductoServImplementa implements ProductoServicio {
 
 	}
 
+	@Override
+	public List<Producto> BuscarProductoDesc(String descProducto) {
+		
+		return oProduRepo.BuscarProductoDesc(descProducto);
+		
+	}
+
 }

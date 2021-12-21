@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,9 +196,9 @@ public class HomeControlador {
 		int idOrden = oOrdenService.GuardarOrden(mCabeOrden);
 		oLogger.info("Orden Creada: {}", idOrden);
 		mCabeOrden.setIdOrden(idOrden);
-		
+
 		oLogger.info("Cabecera Orden Guardar: {}", mCabeOrden);
-		
+
 		// Guarda Detalle
 		for (DetaOrden dtGuardar : mDetalleOrd) {
 
@@ -211,6 +213,33 @@ public class HomeControlador {
 		mDetalleOrd.clear();
 
 		return "redirect:/";
+
+	}
+
+	// Guarda la Orden con los productos
+	@PostMapping("/orden/buscar/producto")
+	public String BuscarProductoOrden(@RequestParam String descProducto, Model oModelo,
+			RedirectAttributes oAtributoMsj) {
+
+		oLogger.info("Descripcion Producto: {}", descProducto);
+
+//		List<Producto> lstProduDesc = oProduService.MostrarTodo().stream()
+//				.filter(x -> x.getNombre().contains(descProducto)).collect(Collectors.toList());
+
+		List<Producto> lstProduDesc = oProduService.BuscarProductoDesc(descProducto);
+		oLogger.info("Encontrados: {}", lstProduDesc);
+
+		if (lstProduDesc.isEmpty()) {
+
+			oAtributoMsj.addFlashAttribute("info", "No existen coincidencias.");
+			return "redirect:/";
+
+		} else {
+
+			oModelo.addAttribute("productos_home", lstProduDesc);
+			return "usuario/home";
+
+		}
 
 	}
 

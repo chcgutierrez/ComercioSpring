@@ -16,5 +16,7 @@ public interface ProductoServicio {
 	public int UpdateProducto(Producto oProducto);
 
 	public int DeleteProducto(Integer idProducto);
+	
+	public List<Producto> BuscarProductoDesc(String descProducto);
 
 }

@@ -12,11 +12,11 @@
 <title>Spring eCommerce</title>
 
 <!-- Bootstrap core CSS -->
-<link th:href="@{vendor/bootstrap/css/bootstrap.min.css}"
+<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link th:href="@{css/heroic-features.css}" rel="stylesheet">
+<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
@@ -24,6 +24,12 @@
 
 	<!-- Navigation - Header -->
 	<div th:include="usuario/temp_user.html::header"></div>
+	
+		<!-- Mensajes -->
+	<div class="alert alert-info alert-dismissable" th:if="${info != null}">
+		<label th:text="${info}"></label>
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
 
 	<!-- Page Content -->
 	<div class="container">
